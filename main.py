@@ -34,13 +34,17 @@ def load_json_safe(path: str):
 # ============= BOT READY EVENT ==================
 @bot.event
 async def on_ready():
+
+    # CUSTOM STATUS 🔥🔥🔥
     await bot.change_presence(
+        status=discord.Status.do_not_disturb,                    # DND status
         activity=discord.Streaming(
-            name="XimCentral",
-            url="https://discord.gg/"
+            name="XimCentral Vouch System",                     # Status text
+            url="https://discord.gg/"                           # Streaming link
         )
     )
 
+    # Sync slash commands
     try:
         synced = await bot.tree.sync()
         print(f"Slash commands synced: {len(synced)}")
@@ -75,8 +79,8 @@ async def vouch(interaction: discord.Interaction, message: str, stars: int):
         color=discord.Color.og_blurple()
     )
     embed.add_field(name="Vouch:", value=message, inline=False)
-    embed.add_field(name="Vouched by:", value=f"<@{interaction.user.id}>", inline=True)
-    embed.add_field(name="Vouched at:", value=str(datetime.now(timezone.utc)), inline=True)
+    embed.add_field(name="Vouched by:", value=f"<@{interaction.user.id}>")
+    embed.add_field(name="Vouched at:", value=str(datetime.now(timezone.utc)))
     embed.set_author(name="Vouch Bot")
     embed.set_thumbnail(url=interaction.user.display_avatar.url)
 
@@ -117,14 +121,14 @@ async def restore_vouches(interaction: discord.Interaction):
             color=discord.Color.og_blurple()
         )
         embed.add_field(name="Vouch:", value=vouch["message"], inline=False)
-        embed.add_field(name="Vouched by:", value=f"<@{vouch['user_id']}>", inline=True)
-        embed.add_field(name="Vouched at:", value=vouch["timestamp"], inline=True)
+        embed.add_field(name="Vouched by:", value=f"<@{vouch['user_id']}>")
+        embed.add_field(name="Vouched at:", value=vouch["timestamp"])
         embed.set_author(name="Vouch Bot")
 
         await interaction.channel.send(embed=embed)
 
 
-# ============= BOT STARTUP ==================
+# ============= BOT TOKEN ==================
 TOKEN = os.getenv("TOKEN")
 
 if TOKEN is None:
