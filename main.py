@@ -51,7 +51,6 @@ def load_json_safe(path):
 @bot.event
 async def on_ready():
     global queue_EmbedMessage  
-    os.system('cls')
     print(banner)
     await bot.change_presence(activity=discord.Streaming(url="https://discord.gg/", name=f"Vouch Bot"))
 
@@ -125,8 +124,6 @@ async def restore_vouches(interaction: discord.Interaction):
     await interaction.response.send_message("Restoring all vouches...")
 
     for vouch in data:
-        print(f"{m}{datetime.now().strftime('%H:%M:%S')}{re} | Restored vouch | User{dim} >>{re} {c}{vouch['user_name']}")
-
         embed = discord.Embed(
             title="Restored Vouch",
             description=f"{vouch['rating']}",
@@ -135,7 +132,6 @@ async def restore_vouches(interaction: discord.Interaction):
         embed.add_field(name='Vouch:', value=f"{vouch['message']}", inline=False)
         embed.add_field(name='Vouched by:', value=f"<@{vouch['user_id']}>", inline=True)
         embed.add_field(name='Vouched at:', value=f"{vouch['timestamp']}", inline=True)
-
         embed.set_author(name="Vouch Bot")
 
         try:
@@ -143,4 +139,13 @@ async def restore_vouches(interaction: discord.Interaction):
         except discord.HTTPException as e:
             print(f"Failed to send embed: {e}")
 
-bot.run(os.getenv("bot_token"))
+# ============================
+# FIXED TOKEN HANDLING HERE ✔
+# ============================
+
+TOKEN = os.getenv("TOKEN")
+
+if TOKEN is None:
+    print("❌ ERROR: TOKEN environment variable is missing!")
+else:
+    bot.run(TOKEN)
