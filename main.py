@@ -36,7 +36,7 @@ def load_json_safe(path: str):
 async def on_ready():
     await bot.change_presence(
         activity=discord.Streaming(
-            name="Vouch Bot",
+            name="XimCentral",
             url="https://discord.gg/"
         )
     )
