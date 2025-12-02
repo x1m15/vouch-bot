@@ -1,4 +1,2 @@
-discord.py
-aiohttp
-requests
-pytz
+discord.py==2.3.2
+colorama
